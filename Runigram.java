@@ -74,7 +74,7 @@ public class Runigram {
 	// we can apply the function and then use this function to print the resulting image.
 	private static void print(Color[][] image) {
 		for (int i = 0; i< image.length; i++){
-			for (int j = 0; j < image[i].length; j++){
+			for (int j = 0; j < image[0].length; j++){
 				print(image[i][j]);
 			}
 			System.out.println();
@@ -112,28 +112,30 @@ public class Runigram {
 	// lum = 0.299 * r + 0.587 * g + 0.114 * b, and returns a Color object consisting
 	// the three values r = lum, g = lum, b = lum.
 	private static Color luminance(Color pixel) {
-		
-		double lum = 0.299 * pixel.getRed() + 0.587 * pixel.getGreen() + 0.114 * pixel.getBlue();
+
+		int r = pixel.getRed();
+		int g = pixel.getGreen();
+		int b = pixel.getBlue();
+
+		int lum = (int) (0.299 * r + 0.587 * g + 0.114 * b);
 		int roundedLum = (int) (lum);
-		return new Color(roundedLum,roundedLum,roundedLum);
+		return   new Color(roundedLum, roundedLum, roundedLum);
 	}
 	
 	/**
 	 * Returns an image which is the grayscaled version of the given image.
 	 */
 	public static Color[][] grayScaled(Color[][] image) {
-		int height = image.length; //number of rows
-		int width = image[0].length; // number of columns
-		Color [][] grayScaledImg = new Color [ height][width];
-		for(int i =0;i<height;i++){		
-			for(int j =0;j<width;j++){				
-				grayScaledImg[i][j] = luminance(image[i][j]);
-			}
+		Color[][] grayScaled = new Color[image.length][image[0].length];
+		for(int i = 0; i<image.length; i++ ){
+			for(int j = 0; j < image[0].length; j++){
+				 grayScaled[i][j] = luminance(image[i][j]);
 
-			
+
+			}
 		}
 		//// Replace the following statement with your code
-		return grayScaledImg;
+		return grayScaled;
 	}	
 	
 	/**
@@ -142,22 +144,23 @@ public class Runigram {
 	 */
 	public static Color[][] scaled(Color[][] image, int width, int height) {
         int h = image.length;
-		int w = image[0].length;
+        int w = image[0].length;
 
-		Color[][] scaledImg =new Color[height][width]; 	
 
-		double newH = (double) (h/height);
-		double newW = (double) (w/width);
+		Color[][] scaledImg = new Color[height][width]; 	
+
+		double newH = (double) h / height;
+		double newW = (double) w / width;
 
 			
 
-		for (int i = 0 ; i< height; i++){
-			for(int j = 0 ; j< width;j++){
-				int heightScale = (int) (i*newH);
-				int widthScale = (int) (j* newW);
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				int heightScale = (int) (i * newH);
+                int widthScale = (int) (j * newW);
 
-				heightScale = Math.min(heightScale,h-1);
-				widthScale = Math.min(widthScale,w-1);
+				 heightScale = Math.min(heightScale, h - 1);
+                 widthScale = Math.min(widthScale, w - 1);
 
 
 
